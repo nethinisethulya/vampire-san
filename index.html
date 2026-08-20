@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Happy Birthday, Gopi San</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<div id="boot">
+  <div class="pixel">SYSTEM BOOT<br>LOADING BIRTHDAY.EXE</div>
+  <div class="loadbar"></div>
+  <div class="pixel" style="font-size:8px; color:var(--text-dim);">PLEASE WAIT<span class="blink">_</span></div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="bot">
+      <div class="antenna-tip"></div>
+      <div class="antenna"></div>
+      <div class="head">
+        <span class="bolt tl"></span><span class="bolt tr"></span><span class="bolt bl"></span><span class="bolt br"></span>
+        <div class="visor"><span class="eye"></span><span class="eye"></span></div>
+        <div class="mouth"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <h1 class="pixel">HAPPY<br>BIRTHDAY<span class="cyan-txt">_</span></h1>
+    <div class="name pixel">// GOPI SAN 🧛‍♂️</div>
+    <p class="sub">SYSTEM STATUS: <span class="gold-txt">+1 YEAR ADDED TO UPTIME</span></p>
+
+    <div class="walk-lane" id="walkLane">
+      <div class="walker" id="walker"><div class="flip" id="walkerFlip"></div></div>
+    </div>
+  </section>
+
+  <section class="fade-in">
+    <div class="eyebrow">MODULE 01 // MAKE A WISH</div>
+    <div class="panel-3d">
+      <div class="console-head">
+        <span class="console-title">WISH_CAKE.SYS</span>
+        <div class="dots"><span></span><span></span><span></span></div>
+      </div>
+      <div class="cake-stage" id="cakeStage"></div>
+      <div class="candle-count" id="candleCount">5 CANDLES LIT</div>
+      <div class="console-msg" id="cakeMsg">5 CANDLES ALREADY LIT. TAP THE CAKE TO ADD MORE.</div>
+      <button class="btn-3d" id="micBtn"><span class="dot"></span> ENABLE MIC &amp; BLOW</button>
+      <p class="hint">(needs mic access — works best in a quiet room)</p>
+    </div>
+  </section>
+
+  <section class="fade-in">
+    <div class="eyebrow">MODULE 02 // MINI GAMES</div>
+    <div class="games-grid">
+
+      <div class="panel-3d game-card">
+        <div class="console-title">MINI_SUDOKU.SYS</div>
+        <div class="sudoku-grid" id="sudokuGrid"></div>
+        <button class="btn-3d small" id="sudokuCheck">CHECK</button>
+        <div class="game-msg" id="sudokuMsg">FILL THE GRID. 1–4, NO REPEATS PER ROW/COL/BOX.</div>
+      </div>
+
+      <div class="panel-3d game-card">
+        <div class="console-title">LATENCY_TEST.SYS</div>
+        <div class="reaction-box" id="reactionBox">
+          <span id="reactionLabel">PRESS START</span>
+        </div>
+        <button class="btn-3d small" id="reactionBtn">START TEST</button>
+        <div class="game-msg" id="reactionMsg">CLICK THE MOMENT IT TURNS GREEN.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="fade-in">
+    <div class="eyebrow">MODULE 03 // INCOMING TRANSMISSION</div>
+    <div class="panel-3d terminal">
+      <span class="prompt">&gt;</span> <span id="typewriter"></span><span class="cursor-bar"></span>
+    </div>
+  </section>
+
+  <section class="fade-in">
+    <div class="eyebrow">MODULE 04 // MEMORY BANK</div>
+    <p class="hint" style="margin-bottom:14px;">drop photos into /assets named photo-1.jpg … photo-4.jpg and they'll show up here automatically</p>
+    <div class="belt-wrap">
+      <div class="belt-track" id="beltTrack"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="pixel">END OF TRANSMISSION</div>
+    <div>made with 🔧 + ❤️ for your big day</div>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
