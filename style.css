@@ -130,8 +130,6 @@ section{padding:56px 0; position:relative;}
 .walker .frameB{display:none;}
 .walker.step .frameA{display:none;}
 .walker.step .frameB{display:block;}
-.toy-wrap{position:absolute; left:68px; top:38px;}
-.toy-wrap svg{display:block; image-rendering:pixelated;}
 
 .bot-buddy{position:absolute; bottom:14px; left:0; will-change:transform;}
 .bot-buddy-bob{animation:bot-bob 1.6s ease-in-out infinite;}

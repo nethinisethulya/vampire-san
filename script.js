@@ -86,52 +86,27 @@ let walkerWidth = 98, walkerHeight = 126;
   walkerWidth = framesA[0].length * size;
   walkerHeight = framesA.length * size;
 
-  // small avatar-figure toy: dark hair, blue face, teal collar/robe — held out near the hand
-  const toyColorMap = { d:'#161616', t:'#4f9fd9', c:'#1f6b6b' };
-  const toyRows = [
-    ".dddddd.",
-    "dddddddd",
-    "dttttttd",
-    ".tttttt.",
-    ".tttttt.",
-    "..tttt..",
-    ".cccccc.",
-    "cccccccc",
-    "cccccccc",
-    ".cccccc."
-  ];
-  const toySvg = buildSprite(toyRows, toyColorMap, 7, 'toy-svg');
-  const toyWrap = document.createElement('div');
-  toyWrap.className = 'toy-wrap';
-  toyWrap.innerHTML = toySvg;
-
   const flip = document.getElementById('walkerFlip');
   flip.innerHTML = svgA + svgB;
-  flip.appendChild(toyWrap);
-
-  // account for the toy's overhang so the lane bounds keep it fully visible
-  walkerWidth = Math.max(walkerWidth, 68 + toyRows[0].length * 7);
 })();
 
 /* ---------- small companion robot that hovers along beside him ---------- */
-let robotWidth = 60;
+let robotWidth = 40;
 (function(){
-  const colorMap = { m:'#233a63', y:'#5be3ff', o:'#ffc857', k:'#14161c' };
+  const colorMap = { m:'#233a63', y:'#5be3ff', o:'#ffc857' };
   const rows = [
-    "....oo....",
-    "....mm....",
-    ".mmmmmmmm.",
-    ".myymmyym.",
-    ".mmmmmmmm.",
-    "..mmmmmm..",
-    ".mmmmmmmm.",
-    ".mmmmmmmm.",
-    ".mmmmmmmm.",
-    "..mm..mm..",
-    "..kk..kk.."
+    "...oo...",
+    "...mm...",
+    ".mmmmmm.",
+    ".mymmym.",
+    ".mmmmmm.",
+    "..mmmm..",
+    ".mmmmmm.",
+    ".mmmmmm.",
+    "..m..m.."
   ];
-  const svg = buildSprite(rows, colorMap, 6, 'robot-svg');
-  robotWidth = rows[0].length * 6;
+  const svg = buildSprite(rows, colorMap, 5, 'robot-svg');
+  robotWidth = rows[0].length * 5;
   document.getElementById('botBuddyBob').innerHTML = svg;
 })();
 
