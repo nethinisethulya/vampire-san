@@ -130,6 +130,13 @@ section{padding:56px 0; position:relative;}
 .walker .frameB{display:none;}
 .walker.step .frameA{display:none;}
 .walker.step .frameB{display:block;}
+.toy-wrap{position:absolute; left:68px; top:38px;}
+.toy-wrap svg{display:block; image-rendering:pixelated;}
+
+.bot-buddy{position:absolute; bottom:14px; left:0; will-change:transform;}
+.bot-buddy-bob{animation:bot-bob 1.6s ease-in-out infinite;}
+.bot-buddy-bob svg{display:block; image-rendering:pixelated;}
+@keyframes bot-bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
 
 /* ---------- WISH CONSOLE ---------- */
 .console-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
@@ -203,7 +210,7 @@ section{padding:56px 0; position:relative;}
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
   position:relative; overflow:hidden;
 }
-.slot img{width:100%; height:100%; object-fit:cover; display:none; position:absolute; inset:0;}
+.slot img, .slot video{width:100%; height:100%; object-fit:cover; display:none; position:absolute; inset:0;}
 .slot .ph-icon{width:26px; height:26px; border:2px solid var(--text-dim); position:relative;}
 .slot .ph-icon::after{content:''; position:absolute; left:4px; bottom:4px; width:0; height:0;
   border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:8px solid var(--text-dim);}

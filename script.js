@@ -39,12 +39,11 @@ function buildSprite(rows, colorMap, size, cls){
   return `<svg class="${cls}" width="${cols*size}" height="${rows.length*size}" viewBox="0 0 ${cols*size} ${rows.length*size}">${rects}</svg>`;
 }
 
-/* ---------- walking mini figure (bigger, no clipping, holding a small blue toy figure) ---------- */
+/* ---------- walking mini figure (black hair, holding a small avatar-figure toy) ---------- */
 let walkerWidth = 98, walkerHeight = 126;
 (function(){
   const colorMap = {
-    h:'#8a5a34', f:'#f4c396', g:'#2fae66', k:'#14161c', s:'#f5f5f5',
-    b:'#2f7bff', t:'#bfe6ff', e:'#14161c'
+    h:'#161616', f:'#f4c396', g:'#2fae66', k:'#14161c', s:'#f5f5f5', e:'#14161c'
   };
   const common = [
     "..............",
@@ -54,8 +53,8 @@ let walkerWidth = 98, walkerHeight = 126;
     "..hfeffefh...",
     "...ffffff....",
     "....ffff.....",
-    "..ggggggggftt.",
-    "..ggggggggfbb.",
+    "..ggggggggf...",
+    "..ggggggggf...",
     "..gggggggg....",
     "..gggggggg....",
     "..gggggggg....",
@@ -87,19 +86,68 @@ let walkerWidth = 98, walkerHeight = 126;
   walkerWidth = framesA[0].length * size;
   walkerHeight = framesA.length * size;
 
+  // small avatar-figure toy: dark hair, blue face, teal collar/robe — held out near the hand
+  const toyColorMap = { d:'#161616', t:'#4f9fd9', c:'#1f6b6b' };
+  const toyRows = [
+    ".dddddd.",
+    "dddddddd",
+    "dttttttd",
+    ".tttttt.",
+    ".tttttt.",
+    "..tttt..",
+    ".cccccc.",
+    "cccccccc",
+    "cccccccc",
+    ".cccccc."
+  ];
+  const toySvg = buildSprite(toyRows, toyColorMap, 7, 'toy-svg');
+  const toyWrap = document.createElement('div');
+  toyWrap.className = 'toy-wrap';
+  toyWrap.innerHTML = toySvg;
+
   const flip = document.getElementById('walkerFlip');
   flip.innerHTML = svgA + svgB;
+  flip.appendChild(toyWrap);
+
+  // account for the toy's overhang so the lane bounds keep it fully visible
+  walkerWidth = Math.max(walkerWidth, 68 + toyRows[0].length * 7);
 })();
 
-/* random back-and-forth wandering within the lane */
+/* ---------- small companion robot that hovers along beside him ---------- */
+let robotWidth = 60;
+(function(){
+  const colorMap = { m:'#233a63', y:'#5be3ff', o:'#ffc857', k:'#14161c' };
+  const rows = [
+    "....oo....",
+    "....mm....",
+    ".mmmmmmmm.",
+    ".myymmyym.",
+    ".mmmmmmmm.",
+    "..mmmmmm..",
+    ".mmmmmmmm.",
+    ".mmmmmmmm.",
+    ".mmmmmmmm.",
+    "..mm..mm..",
+    "..kk..kk.."
+  ];
+  const svg = buildSprite(rows, colorMap, 6, 'robot-svg');
+  robotWidth = rows[0].length * 6;
+  document.getElementById('botBuddyBob').innerHTML = svg;
+})();
+
+/* random back-and-forth wandering within the lane, with the robot buddy trailing along */
 (function(){
   const lane = document.getElementById('walkLane');
   const walker = document.getElementById('walker');
   const flip = document.getElementById('walkerFlip');
+  const robot = document.getElementById('botBuddy');
   let x = 20, targetX = 20, dir = 1, moving = false;
 
   function laneMax(){
     return Math.max(0, lane.clientWidth - walkerWidth);
+  }
+  function robotMax(){
+    return Math.max(0, lane.clientWidth - robotWidth);
   }
   function pickTarget(){
     targetX = Math.random() * laneMax();
@@ -118,6 +166,9 @@ let walkerWidth = 98, walkerHeight = 126;
         flip.style.transform = `scaleX(${dir})`;
       }
     }
+    // robot buddy trails just behind him, whichever way he's facing
+    const robotX = Math.max(0, Math.min(x + (dir > 0 ? -46 : 46), robotMax()));
+    robot.style.transform = `translateX(${robotX}px)`;
     requestAnimationFrame(tick);
   }
   setInterval(()=>{ walker.classList.toggle('step', moving); }, 220);
@@ -355,30 +406,47 @@ const twObs = new IntersectionObserver((entries)=>{
 }, {threshold:.4});
 twObs.observe(document.querySelector('.terminal'));
 
-/* ---------- conveyor belt gallery ---------- */
+/* ---------- conveyor belt gallery (photo or video per slot) ---------- */
 (function(){
   const track = document.getElementById('beltTrack');
-  const photos = ['photo-1.jpg','photo-2.jpg','photo-3.jpg','photo-4.jpg'];
+  const SLOT_COUNT = 4;
 
-  function makeSlot(src, num){
+  function makeSlot(num){
     const slot = document.createElement('div');
     slot.className = 'slot';
     slot.innerHTML = `
-      <img src="assets/${src}" alt="">
+      <video class="media-video" muted loop playsinline autoplay style="display:none"></video>
+      <img class="media-img" alt="" style="display:none">
       <div class="ph-icon"></div>
       <div class="label">SLOT_0${num}</div>
     `;
-    const img = slot.querySelector('img');
-    img.addEventListener('load', ()=>{
-      img.style.display = 'block';
-      slot.querySelector('.ph-icon').style.display = 'none';
-      slot.querySelector('.label').style.display = 'none';
+    const video = slot.querySelector('.media-video');
+    const img = slot.querySelector('.media-img');
+    const icon = slot.querySelector('.ph-icon');
+    const label = slot.querySelector('.label');
+
+    function reveal(el){
+      el.style.display = 'block';
+      icon.style.display = 'none';
+      label.style.display = 'none';
+    }
+
+    // try a video for this slot first (assets/photo-N.mp4)
+    video.addEventListener('loadeddata', ()=> reveal(video));
+    video.addEventListener('error', ()=>{
+      // no video for this slot — fall back to a photo (assets/photo-N.jpg)
+      img.src = `assets/photo-${num}.jpg`;
     });
+    img.addEventListener('load', ()=> reveal(img));
+    img.addEventListener('error', ()=>{ /* neither found — keep placeholder icon */ });
+
+    video.src = `assets/photo-${num}.mp4`;
+
     return slot;
   }
 
   // duplicate the set once so the belt loop is seamless
   [1,2].forEach(()=>{
-    photos.forEach((src,i)=> track.appendChild(makeSlot(src, i+1)));
+    for(let i=1;i<=SLOT_COUNT;i++) track.appendChild(makeSlot(i));
   });
 })();
