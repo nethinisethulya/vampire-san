@@ -185,7 +185,7 @@ function updateCount(){
   const lit = candles.filter(c=>!c.el.classList.contains('out')).length;
   candleCountEl.textContent = lit + ' CANDLE' + (lit!==1?'S':'') + ' LIT';
   if(candles.length>0 && lit===0){
-    cakeMsg.innerHTML = '<strong>WISH REGISTERED.</strong><br>MAY IT COMPILE WITHOUT ERRORS.';
+    cakeMsg.innerHTML = '<strong>WISH REGISTERED.</strong><br>MAY IT COME TRUE WITHOUT ERRORS.';
   }
 }
 
@@ -295,8 +295,8 @@ micBtn.addEventListener('click', async ()=>{
 
   function verdict(ms){
     if(ms < 220) return 'ROBOT-LIKE REFLEXES 🤖';
-    if(ms < 350) return 'PRETTY SHARP ⚡';
-    if(ms < 500) return 'RESPECTABLE 👍';
+    if(ms < 350) return 'PRETTY SHARP FOR A 43 Y/O ⚡';
+    if(ms < 500) return 'RESPECTABLE 😎👍';
     return 'TAKE YOUR TIME, OLD TIMER 🐢';
   }
 
@@ -337,7 +337,7 @@ micBtn.addEventListener('click', async ()=>{
 })();
 
 /* ---------- typewriter wish message ---------- */
-const wishText = "Happy Birthday, Mr. Gopi San! 🎂😂 Another year older, wiser… (and the same level of nonsense). Hope your day is filled with good food, zero stress, and people laugh at your jokes. Have a good one, mister! 🧛\u200d♂️🎉";
+const wishText = "Happy Birthday, Mister Gopi! 🎂😂 Another year older, wiser… (and the same level of nonsense). Hope your day is filled with good food, zero stress, and people laughing at your jokes. Have a good one, mister! 🧛\u200d♂️🎉";
 const twEl = document.getElementById('typewriter');
 let typed = false;
 const twObs = new IntersectionObserver((entries)=>{
